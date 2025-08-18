@@ -1,0 +1,105 @@
+@use "sass:color"; // Import the color module
+@use '../base/variables' as *;
+
+.practice-review {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-weight: bold;
+        color: $primary-color; // Deep indigo
+    }
+
+    #reviewContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .review-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        background-color: $secondary-color; // Soft slate blue
+        border: 1px solid color.scale($secondary-color, $lightness: -20%);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+            transform: translateY(-5px);
+        }
+
+        .review-left,
+        .review-right {
+            width: 48%;
+        }
+
+        .review-left {
+            .problem-text {
+                font-size: 1rem;
+                margin-bottom: 10px;
+                color: $text-color; // Soft white
+                line-height: 1.5;
+            }
+
+            .user-answer {
+                font-size: 1rem;
+                font-weight: bold;
+                color: $white; // Bright white for better emphasis
+                margin-bottom: 10px;
+            }
+
+            .feedback {
+                font-size: 1rem;
+                font-weight: bold;
+                &.correct {
+                    color: $text-color; // Deep indigo for correct answers
+                }
+                &.incorrect {
+                    color: color.scale(#d9534f, $lightness: -10%); // Slightly darker red for incorrect answers
+                }
+            }
+        }
+
+        .review-right {
+            .true-answer {
+                font-size: 1rem;
+                font-weight: bold;
+                color: $text-color; // Soft white
+                margin-bottom: 10px;
+            }
+
+            .answer-text {
+                font-size: 0.9rem;
+                color: $white; // White for consistency with the dark theme
+                line-height: 1.5;
+            }
+        }
+    }
+
+    .return-btn {
+        display: block;
+        margin: 30px auto;
+        padding: 10px 20px;
+        background-color: $primary-color; // Deep indigo
+        color: $text-color; // Soft white
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: color.scale($primary-color, $lightness: -10%);
+        }
+    }
+}

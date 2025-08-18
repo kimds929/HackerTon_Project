@@ -1,0 +1,156 @@
+@use 'base/variables' as *;
+@use 'pages/register';
+@use 'pages/login';
+@use 'pages/practice_attempt';
+@use 'pages/practice_main';
+@use 'pages/practice_review';
+@use 'sass:color';
+
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: 'Inter', Helvetica, sans-serif; }
+@supports (font-variation-settings: normal) {
+  html { font-family: 'Inter var', Helvetica, sans-serif; }
+}
+
+// General body styling
+body {
+    background-color: $background-color;
+    color: $text-color;
+    margin: 0;
+    padding: 0;
+}
+
+// Header styling
+header {
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $header-bg-color;
+        padding: 10px 20px;
+        color: $white;
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            img {
+                height: 40px;
+                margin-right: 10px;
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style-type: none;
+            gap: 20px;
+            li { 
+                display: inline;
+                a {
+                    color:$header-text-color;
+                    text-decoration: none;
+                    font-size: 1.2rem;
+
+                    &:hover {
+                        text-decoration: underline;
+                        transform: scale(1.5);
+                        font-weight: bold;
+                        text-shadow: 0.5px 0.5px 1px $header-text-color;
+                        border-radius: 3px;
+                        padding: 2.5px 5px;                        
+                    }
+                }
+            }
+        }
+
+        .auth-buttons {
+            a {
+                text-decoration: none;
+                padding: 5px 10px;
+                border-radius: 5px;
+
+                &.logout-btn {
+                    text-decoration: none;
+                    border: none;
+                    background: none;
+                    color: $header-text-color;
+                    cursor: pointer;
+                }
+
+                &.logout-btn:hover {
+                    text-decoration: underline;
+                    color: $white;
+                }
+
+                &.login-btn {
+                    color: $login-btn-color;
+                    background-color: transparent;
+                    border: 1px solid $white;
+                }
+
+                &.login-btn:hover {
+                    background-color: $login-btn-color;
+                    color: $white;
+                }
+
+                &.signup-btn {
+                    background-color: $signup-btn-color;
+                    color: $white;
+                }
+
+                &.signup-btn:hover {
+                    background-color: color.adjust($signup-btn-color, $lightness: -10%);
+                }
+            }
+        }
+    }
+}
+
+// Landing Section styling
+.landing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;  // Allows wrapping on smaller screens
+    padding: 50px;
+    gap: 20px;
+
+    .landing-content {
+        flex: 1;
+        max-width: 500px;
+        color: #2a2852;
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            max-width: 600px;
+            text-align: left;
+        }
+    }
+
+    .landing-image {
+        flex: 1;
+        max-width: 400px;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+    .landing {
+        flex-direction: column;  // Stacks elements vertically on small screens
+        text-align: center;
+
+        .landing-content,
+        .landing-image {
+            max-width: 100%;  // Full width for both elements
+        }
+    }
+}

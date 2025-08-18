@@ -1,0 +1,87 @@
+// Import existing variables if needed
+@use '../base/variables' as *;
+@use 'sass:color';
+
+// Login Page Styling
+.login-page {
+    background-color: $background-color; // Reuse color scheme for consistency
+    padding: 50px 20px;
+
+    .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        background-color: $white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+
+        h2 {
+            text-align: center;
+            color: $header-bg-color; // Primary color for headings
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        form {
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: $header-bg-color;
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                width: 95%;
+                padding: 10px;
+                border: 1px solid $input-border-color;
+                border-radius: 5px;
+                font-size: 14px;
+                outline: none;
+                transition: border-color 0.3s ease;
+
+                &:focus {
+                    border-color: $header-bg-color; // Primary color on focus
+                }
+            }
+
+            .btn-primary {
+                width: 100%; // Full width for a prominent button
+                background-color: $header-bg-color; // Primary color
+                color: $white;
+                border: none;
+                padding: 12px;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                margin-top: 15px;
+
+                &:hover {
+                    background-color: color.adjust($header-bg-color, $lightness: -10%);
+                }
+            }
+        }
+    }
+}
+
+// Responsive Design for Login Page
+@media (max-width: 600px) {
+    .login-page {
+        padding: 20px;
+
+        .login-container {
+            padding: 20px;
+        }
+
+        .btn-primary {
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+}

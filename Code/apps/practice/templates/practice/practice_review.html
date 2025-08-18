@@ -1,0 +1,67 @@
+{% extends "p4ds/base_layout.html" %}
+
+{% block header %}
+<script type="text/javascript">
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        startup: {
+            typeset: false // Disable automatic typesetting to control it manually
+        }
+    };
+</script>
+<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}
+
+{% block body %}
+<section class="practice-review">
+    <div class="container">
+        <h2>문제 풀이 결과</h2>
+        <div id="reviewContainer">
+            <!-- Dynamic cards will be inserted here -->
+        </div>
+        <button class="btn btn-primary return-btn" onclick="window.location.href='/practice/main/'">메인으로 돌아가기</button>
+    </div>
+</section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const questionSetId = {{ question_set_id }};
+        fetch(`/practice/review_data/${questionSetId}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const container = document.getElementById('reviewContainer');
+                    container.innerHTML = '';
+                    data.response_data.forEach((item, index) => {
+                        const card = document.createElement('div');
+                        card.classList.add('review-card');
+                        card.innerHTML = `
+                            <div class="review-left">
+                                <h3>문제 ${index + 1}</h3>
+                                <p class="problem-text">${item.question_text}</p>
+                                <p class="user-answer">학생의 답안: <span>${item.user_answer}</span></p>
+                                <p class="feedback ${item.is_correct ? 'correct' : 'incorrect'}">
+                                    ${item.is_correct ? "정답입니다." : "오답입니다."}
+                                </p>
+                            </div>
+                            <div class="review-right">
+                                <h4>정답 및 해설</h4>
+                                <p class="true-answer">정답: <span>${item.answer_correct}</span></p>
+                                <p class="answer-text">${item.answer_text}</p>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+
+                    // Trigger MathJax typesetting for LaTeX
+                    MathJax.typesetPromise().catch(err => console.error('MathJax rendering failed:', err));
+                } else {
+                    alert('리뷰 데이터를 불러오는 데 실패했습니다.');
+                }
+            })
+            .catch(error => console.error('Error fetching review data:', error));
+    });
+</script>
+{% endblock %}

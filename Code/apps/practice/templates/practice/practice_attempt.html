@@ -1,0 +1,40 @@
+{% extends "p4ds/base_layout.html" %}
+{% load static %}
+
+{% block header%}
+<script type="text/javascript">
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        startup: {
+            typeset: false // Disable automatic typesetting to control it manually
+        }
+    };
+</script>
+<script type="text/javascript" async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}
+
+
+
+{% block body %}
+{% csrf_token %}
+<input type="hidden" id="userId" value="{{ user_id }}">
+<section class="practice-attempt">
+    <div class="container">
+        <h2>나만을 위한 문제 풀기</h2>
+        <div id="problemContainer" class="problem-list">
+            <!-- Problem items will be dynamically injected here -->
+        </div>
+        <button type="button" class="btn-submit" onclick="submitAnswers()">답안 제출하기</button>
+    </div>
+</section>
+
+<script>
+    const nextProblemSetReady = {{ next_problem_set_ready|yesno:"true,false" }};  // Embeds the readiness flag
+</script>
+<script src="{% static 'practice/practice_attempt.js' %}"></script>
+
+
+{% endblock %}

@@ -1,0 +1,142 @@
+@use "sass:color"; // Import the color module
+
+@use '../base/variables' as *;
+
+.practice-main {
+    display: flex;
+    justify-content: center; // Centers the main container on the page
+    padding: 20px;
+    background-color: $background-color; // Dark navy
+
+    .container {
+        max-width: 1200px; // Adjust to fit within your design scope
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .top-section,
+    .bottom-section {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+
+        .stats-chart,
+        .analytics,
+        .practice-history,
+        .practice-call-to-action {
+            background-color: $secondary-color; // Soft slate blue
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Slightly darker shadow for contrast
+            color: $text-color; // Soft white text
+        }
+    }
+
+    .top-section {
+        flex: 1 1 50%; // Adjusts height for better proportion
+        align-items: center;
+
+        .stats-chart {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .practice-call-to-action {
+            flex: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid color.scale($secondary-color, $lightness: -20%);
+            background-color: color.scale($secondary-color, $lightness: 10%);
+
+            h4 {
+                margin-bottom: 10px;
+                color: $text-color;
+                font-size: 18px;
+            }
+
+            p {
+                margin-bottom: 15px;
+                color: $white; // Slightly lighter text for better readability
+            }
+
+            .btn {
+                background-color: $primary-color; // Deep indigo
+                color: $text-color; // Soft white
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                border: none;
+                transition: background-color 0.3s ease-in-out;
+
+                &:hover {
+                    background-color: color.scale($primary-color, $lightness: -10%);
+                }
+            }
+        }
+    }
+
+    .bottom-section {
+        flex: 1 1 50%; // Adjusts height for a balanced look
+        justify-content: space-between;
+
+        .analytics,
+        .practice-history {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            h3 {
+                margin-bottom: 15px;
+                color: $text-color; // Soft white
+                font-size: 20px;
+            }
+
+            .practice-table {
+                width: 100%;
+                border-collapse: collapse;
+
+                th,
+                td {
+                    border: 1px solid color.scale($secondary-color, $lightness: -20%);
+                    padding: 10px;
+                    text-align: center;
+                    color: $white; // White text for better contrast
+                }
+
+                th {
+                    background-color: $primary-color; // Deep indigo for table header
+                    color: $text-color; // Soft white text
+                }
+            }
+
+            .pagination {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 15px;
+
+                .btn {
+                    background-color: $primary-color; // Deep indigo
+                    color: $text-color; // Soft white
+                    padding: 5px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    border: none;
+
+                    &:disabled {
+                        background-color: color.scale($primary-color, $lightness: -20%);
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,128 @@
+// Import existing variables and modules
+@use '../base/variables' as *;
+@use 'sass:color';
+
+// Registration Page-Specific Variables
+$register-bg-color: #ffffff;
+$form-shadow-color: rgba(0, 0, 0, 0.1);
+$input-border-color: #cfd8dc;
+
+// Registration Page Styling
+.register {
+    background: linear-gradient(to bottom, #e3f2fd, #ffffff); // Soft gradient background
+    padding: 50px 20px;
+
+    .container {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: $register-bg-color;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px $form-shadow-color;
+        padding: 30px;
+
+        h2 {
+            text-align: center;
+            color: $header-bg-color; // Matches header primary color
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            .form-group {
+                margin-bottom: 15px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: $header-bg-color;
+            }
+
+            input[type="text"],
+            input[type="password"],
+            input[type="email"],
+            select {
+                width: 100%;
+                max-width: 350px;
+                padding: 10px;
+                border: 1px solid $input-border-color;
+                border-radius: 5px;
+                font-size: 14px;
+                outline: none;
+                transition: border-color 0.3s ease;
+
+                &:focus {
+                    border-color: $header-bg-color; // Matches the primary color for consistency
+                }
+
+                &::placeholder {
+                    color: $input-border-color;
+                    font-style: italic;
+                }
+
+            }
+
+            .btn-primary {
+                display: block;
+                width: 100%;
+                max-width:250px;
+                margin: 20px auto 0;
+                background-color: $header-bg-color; // Matches header primary color
+                color: $white;
+                border: none;
+                padding: 12px;
+                font-size: 16px;
+                font-weight: bold;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                margin-top: 15px; // Ensure consistent spacing
+
+                &:hover {
+                    background-color: color.adjust($header-bg-color, $lightness: -10%);
+                    transform: scale(1.03); // Subtle scaling effect
+                }
+            }
+        }
+    }
+}
+
+// Responsive Design for Registration Page
+@media (max-width: 600px) {
+    .register {
+        padding: 20px;
+
+        .container {
+            padding: 20px;
+        }
+
+        .btn-primary {
+            font-size: 14px;
+            padding: 10px;
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .register {
+        .container {
+            padding: 15px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        select {
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        .btn-primary {
+            font-size: 12px;
+            padding: 8px;
+        }
+    }
+}

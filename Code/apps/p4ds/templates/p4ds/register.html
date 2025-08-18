@@ -1,0 +1,125 @@
+{% extends "p4ds/base_layout.html" %}
+{% load static %}
+{% block body %}
+<section class="register">
+    <div class="container mt-5">
+        <h2>Sign Up</h2>
+        <form id="registrationForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="user_id">User ID</label>
+                <input type="text" class="form-control" id="user_id" name="user_id" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="role">Role</label>
+                <select class="form-control" id="role" name="role" required>
+                    <option value="">Select role</option>
+                    <option value="1">Student</option>
+                    <option value="2">Teacher</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="email">Email (optional)</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone (optional)</label>
+                <input type="text" class="form-control" id="phone" name="phone">
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender (optional)</label>
+                <select class="form-control" id="gender" name="gender">
+                    <option value="">Select gender</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+\                </select>
+            </div>
+            <div class="form-group">
+                <label for="school_name">School Name (optional)</label>
+                <input type="text" class="form-control" id="school_name" name="school_name">
+            </div>
+            <div class="form-group">
+                <label for="user_grade">Grade (Mandatory)</label>
+                <div>
+                    <label>
+                        <input type="radio" name="user_grade" value="중1"> 중1
+                    </label>
+                    <label>
+                        <input type="radio" name="user_grade" value="중2"> 중2
+                    </label>
+                    <label>
+                        <input type="radio" name="user_grade" value="중3"> 중3
+                    </label>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary mt-3" onclick="submitRegistrationForm()">Sign Up</button>
+        </form>
+    </div>
+</section>  
+
+<script>
+    
+    function submitRegistrationForm() {
+        // Create JSON data from form fields
+        function getValueOrNull(id) {
+            var element = document.getElementById(id);
+            return element && element.value.trim() !== "" ? element.value : null;
+        }
+
+        function getRadioValue(name) {
+            var radios = document.getElementsByName(name);
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    return radios[i].value;
+                }
+            }
+            return null;
+        }
+
+        // Create JSON data from form fields
+        var jsonData = {
+            "user_id": getValueOrNull('user_id'),
+            "password": getValueOrNull('password'),
+            "username": getValueOrNull('username'),
+            "role": getValueOrNull('role'),
+            "email": getValueOrNull('email'),
+            "phone": getValueOrNull('phone'),
+            "gender": getValueOrNull('gender'),
+            "school_name": getValueOrNull('school_name'),
+            "user_grade": getRadioValue('user_grade')
+        };
+    
+    
+        fetch(`/api/user/register/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Redirect to the home page after successful registration
+                window.location.href = '/';
+            } else {
+                console.error('Registration failed:', data.message);
+                alert("Registration failed: " + (data.message || "Please try again."));
+            }
+        })
+        .catch(error => {
+            console.log('Error during registration:', error);
+            alert("An unexpected error occurred. Please try again later.");
+        });
+    }
+</script>
+{% endblock %}

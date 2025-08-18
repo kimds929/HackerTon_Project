@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ReinforceMath - Learn with AI{% endblock %}</title>
+    <link href="{% static 'p4ds/style.css' %}" rel="stylesheet">
+    {% block header %} {% endblock %}
+</head>
+
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="{% url 'p4ds:index' %}">
+                    <img src="{% static 'p4ds/images/logo-light.png' %}" alt="ReinforceMath Logo">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{% url 'p4ds:index' %}">홈</a></li>
+                <li><a href="{% url 'practice:practice_main' %}">내 공부방</a></li>
+                <li><a href="{% url 'practice:practice_attempt' %}">문제 풀기</a></li>
+            </ul>
+            <div class="auth-buttons">
+                {% if user.is_authenticated %}
+                    <a class="btn logout-btn" onclick="logout()">Log out</a>
+                {% else %}
+                    <a href="/login" class="btn login-btn">Log in</a>
+                    <a href="/register" class="btn signup-btn">Sign up</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+
+    <script>
+        // Handle csrftoken here
+        const csrftoken = getCookie('csrftoken');
+
+        function getCookie(name) {
+            var value= "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length == 2) return parts.pop().split(";").shift();
+        }
+
+        function logout() {
+            fetch('/api/user/logout/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Logged out successfully');
+                    window.location.href = '/';
+                } else {
+                    alert('Logout failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.log('Error:', error);  
+            });
+        }
+    </script>
+</body>
+</html>
